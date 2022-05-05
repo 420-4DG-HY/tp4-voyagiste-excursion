@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "PackageService",
+      "composeLaunchUrl": "{Scheme}://{ServiceIPAddress}{ServicePort}/swagger",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "CarService": "StartDebugging",
+        "CommonDataService": "StartDebugging",
+        "PackageService": "StartDebugging"
+      }
+    }
+  }
+}

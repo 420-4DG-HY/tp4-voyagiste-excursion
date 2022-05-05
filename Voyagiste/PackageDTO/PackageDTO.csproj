@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarDTO\CarDTO.csproj" />
+    <ProjectReference Include="..\CommonDataDTO\CommonDataDTO.csproj" />
+    <ProjectReference Include="..\CruiseDTO\CruiseDTO.csproj" />
+    <ProjectReference Include="..\ExcursionDTO\ExcursionDTO.csproj" />
+    <ProjectReference Include="..\FlightDTO\FlightDTO.csproj" />
+    <ProjectReference Include="..\HotelDTO\HotelDTO.csproj" />
+    <ProjectReference Include="..\TrainDTO\TrainDTO.csproj" />
+  </ItemGroup>
+
+</Project>

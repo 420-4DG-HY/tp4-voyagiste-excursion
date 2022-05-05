@@ -1,0 +1,60 @@
+﻿# Ensemble des conteneurs et ressources de la solution Voyagiste
+
+name: "Voyagiste"
+
+# Ce fichier sert a configurer le service 
+# d'orchertration des conteneurs de la solution
+
+# Pour simplifier l'accès de l'externe et éviter les conflits, les ports des 
+# services API sont mappés sur l'hôte en préfixant un chiffre pour 
+# distinguer les services ex.: les ports 443 devienent 1443, 2443, 3443, ...
+
+services:
+
+  # Conteneur du service "CarAPI" du Voyagiste
+  # Ce service permet de réserver des voitures
+  CarService:
+    image: ${DOCKER_REGISTRY-}travel-car
+    build:
+      context: .
+      dockerfile: CarAPI\Dockerfile
+    ports:
+      - "1443:443"
+      - "180:80"
+
+  # Conteneur du service "CommonDataAPI" du Voyagiste
+  # Ce service permet de standardiser les données de références communes
+  # titres de personnes, pays, noms de villes, ...
+  CommonDataService:
+    image: ${DOCKER_REGISTRY-}travel-common
+    build:
+      context: .
+      dockerfile: CommonDataAPI\Dockerfile
+    ports:
+      - "2443:443"
+      - "280:80"
+
+  # Conteneur du service "PackageAPI" du Voyagiste
+  # Ce service permet de réserver des 
+  # forfaits prédéterminés (typiquement Vol + hotel) 
+  # et ajouter des options(voiture, excursion, ...)
+  # Les résultats sont des objets composites
+  PackageService:
+    image: ${DOCKER_REGISTRY-}travel-package
+    build:
+      context: .
+      dockerfile: PackageAPI\Dockerfile
+    ports:
+      - "3443:443"
+      - "380:80"
+    depends_on:
+      - CommonDataService
+      - CarService
+
+# Conteneur de messagerie inter-services 
+# https://hub.docker.com/r/eventstore/eventstore/
+# https://github.com/EventStore/EventStore-Client-Dotnet
+#
+# À venir éventuellement, on passe directement par les 
+# API pour ce TP au lieu d'isoler les services en répliquant 
+# les données
