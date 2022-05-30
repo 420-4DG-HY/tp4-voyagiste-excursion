@@ -13,5 +13,9 @@
     public record BirthDate(DateTime birthDate); // Éventuellement changer le setter pour arrondir et fournir les méthodes pour l'âge
     public record Person(Guid PersonId, Title? title, string firstName, string? middleName, string lastName, BirthDate? birthDate, Passport? passport);
 
-    public record Booking(Guid BookingId, Person traveler);
+    //public record Booking(Guid BookingId, Person traveler);
+    // La notion d'agent est absente pour simplifier le modèle
+    public abstract record Booking(Guid BookingId, Person traveler, DateTime BookedWhen); // On doit typer la réservation (booking) pour l'utiliser
+    public record BookingConfirmation(Guid BookingConfirmationId, Booking Booking, DateTime ConfirmedWhen);
+    public record BookingCancellation(Guid BookingCancellationId, Booking Booking, DateTime CancelledWhen);
 }
