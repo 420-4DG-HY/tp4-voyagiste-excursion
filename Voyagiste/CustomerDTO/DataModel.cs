@@ -1,12 +1,4 @@
 ﻿using CommonDataDTO;
-using CarDTO;
-using CruiseDTO;
-using CustomerDTO;
-using ExcursionDTO;
-using FlightDTO;
-using HotelDTO;
-using TrainDTO;
-using PackageDTO;
 
 namespace CustomerDTO
 {

@@ -1,0 +1,466 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "CarAPI",
+    "version": "1.0"
+  },
+  "paths": {
+    "/Car/GetAvailableCarModels": {
+      "get": {
+        "tags": [
+          "Car"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Car/CarAvailabilities/{CarModelGuid}": {
+      "get": {
+        "tags": [
+          "Car"
+        ],
+        "parameters": [
+          {
+            "name": "CarModelGuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarAvailability"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarAvailability"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarAvailability"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Car/Car/{CarId}": {
+      "get": {
+        "tags": [
+          "Car"
+        ],
+        "parameters": [
+          {
+            "name": "CarId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Car/Book": {
+      "post": {
+        "tags": [
+          "Car"
+        ],
+        "parameters": [
+          {
+            "name": "CarId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "From",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "To",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarBooking"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarBooking"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarBooking"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BirthDate": {
+        "type": "object",
+        "properties": {
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Car": {
+        "type": "object",
+        "properties": {
+          "carId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "from": {
+            "$ref": "#/components/schemas/CarRentalCompany"
+          },
+          "model": {
+            "$ref": "#/components/schemas/CarModel"
+          },
+          "specs": {
+            "$ref": "#/components/schemas/CarSpecifications"
+          },
+          "vehicleId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CarAvailability": {
+        "type": "object",
+        "properties": {
+          "carAvailabilityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "car": {
+            "$ref": "#/components/schemas/Car"
+          },
+          "from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CarBooking": {
+        "type": "object",
+        "properties": {
+          "bookingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "traveler": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "bookedWhen": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "carBookingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "car": {
+            "$ref": "#/components/schemas/Car"
+          },
+          "from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rentedTo": {
+            "$ref": "#/components/schemas/Person"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CarManufacturer": {
+        "type": "object",
+        "properties": {
+          "carManufacturerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "manufacturer": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CarModel": {
+        "type": "object",
+        "properties": {
+          "carModelId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "size": {
+            "$ref": "#/components/schemas/VehicleSize"
+          },
+          "manufacturer": {
+            "$ref": "#/components/schemas/CarManufacturer"
+          },
+          "model": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CarRentalCompany": {
+        "type": "object",
+        "properties": {
+          "carRentalCompanyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "company": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CarSpecifications": {
+        "type": "object",
+        "properties": {
+          "carSpecificationsId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "automatic": {
+            "type": "boolean"
+          },
+          "fourWheelDrive": {
+            "type": "boolean"
+          },
+          "electric": {
+            "type": "boolean"
+          },
+          "gas": {
+            "type": "boolean"
+          },
+          "diesel": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Country": {
+        "type": "object",
+        "properties": {
+          "countryName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Passport": {
+        "type": "object",
+        "properties": {
+          "passportId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "country": {
+            "$ref": "#/components/schemas/Country"
+          },
+          "passportNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiration": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "$ref": "#/components/schemas/Title"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "$ref": "#/components/schemas/BirthDate"
+          },
+          "passport": {
+            "$ref": "#/components/schemas/Passport"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Title": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VehicleSize": {
+        "type": "object",
+        "properties": {
+          "sizeCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
