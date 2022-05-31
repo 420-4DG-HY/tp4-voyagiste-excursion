@@ -5,7 +5,7 @@
 
 Sujet : [inscrivez quel service est développé par l'équipe]
 Noms :
-[Remplacez ce texte par vos noms ici]
+ Martin Gélinas, Jonathan Trottier et Loïc Brunet L.
 
 ## Description
 
